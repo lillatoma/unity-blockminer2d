@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9220676866012775266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9220676866012775264}
+  - component: {fileID: 9220676866012775267}
+  m_Layer: 0
+  m_Name: GameInfoHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9220676866012775264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9220676866012775266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.735212, y: -8.323921, z: -325.6734}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9220676866012775267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9220676866012775266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10fd9a14f68b2440bf59284a3b4e624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OreName:
+  - Bedrock
+  - Coal
+  - Iron
+  - Copper
+  - Silver
+  - Gold
+  - Sapphire
+  - Ruby
+  - Diamond
+  - Bedrock
+  - Dirt
+  OreSpawnPercentage:
+  - 1
+  - 8
+  - 5
+  - 3
+  - 3
+  - 2
+  - 1.5
+  - 1.5
+  - 1
+  - 16
+  - 100
+  OreDepth: 10000000010000000a00000010000000140000001e0000002300000028000000370000003c00000000000000
+  OreDrawable:
+  - {fileID: 1564228886461537647, guid: c782587f96ef43845b85d5adffe0a0ae, type: 3}
+  - {fileID: 1798765814912177567, guid: b98e9a9efdbdba24ba33d162957083c5, type: 3}
+  - {fileID: 3308331911333219420, guid: c2f8dd0256b598d4d81e6b3fc8ef09bd, type: 3}
+  - {fileID: 763826308547806329, guid: 1c385138ccd400d4694a4d2c84b42b68, type: 3}
+  - {fileID: 8493527185867030359, guid: 2019b92720c63cc47aa89a5009763f66, type: 3}
+  - {fileID: 4488305667289310058, guid: 47a05776f6efc614ab7ef11ab5990daa, type: 3}
+  - {fileID: 4999218658755561408, guid: 324d09bf66f563a43bf8603aa798d185, type: 3}
+  - {fileID: 8199709372212406236, guid: 04f000402fddda84e922a3e0c0554937, type: 3}
+  - {fileID: 3368032194334932261, guid: d9208f160fc4ef446be06d765264a6e7, type: 3}
+  - {fileID: 1564228886461537647, guid: c782587f96ef43845b85d5adffe0a0ae, type: 3}
+  - {fileID: 5316569508982870064, guid: cb1989657bd86574ebdf0b800a0350d0, type: 3}
+  OreInvDrawable:
+  - {fileID: 0}
+  - {fileID: 617846169280766175, guid: 393bef4a7d582c345bf1d2d39f43caa3, type: 3}
+  - {fileID: 6854878782181051169, guid: d92525d97294e8646844e345db4bf902, type: 3}
+  - {fileID: 1819650979666743811, guid: d704ca3a57d1ad842979bc38da391318, type: 3}
+  - {fileID: 6149053129479444732, guid: 123e5023489b5a046824f20a9bf2f5a9, type: 3}
+  - {fileID: 1414751351802129875, guid: 64ea8eccb830766489426d2b432819c6, type: 3}
+  - {fileID: 5269432806907504082, guid: d4f1b3df1a2e9624988cd74b98fc69c0, type: 3}
+  - {fileID: 2638011399653666339, guid: 549ff3083558787459a3e72e75782870, type: 3}
+  - {fileID: 3851719881929504310, guid: 358518193f295fc43aea90dc698ef742, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  OrePrice: 00000000050000000a0000000f00000019000000280000004600000064000000c80000000000000000000000
+  BlockBreakage:
+  - {fileID: 2087238457331911358, guid: 860878992a8c18944893aeb74ab75e1c, type: 3}
+  - {fileID: 6002988820125104363, guid: fcdf623dfa3e20d4da9e5ffbd10ccacb, type: 3}
+  - {fileID: 706412573438928208, guid: d4b6155efd5af7245bdf0e0f35c51e1e, type: 3}
+  - {fileID: 247754341503553760, guid: 8b240def64ac17942a622f46c9b840df, type: 3}
+  - {fileID: 1935053777624231534, guid: 4c74e74e5fe929d40905bc450446d57f, type: 3}
+  - {fileID: 1458205915126598912, guid: 7b7246e99fc9820458c6ac11c23b9a0a, type: 3}
+  BlockBreakagePercentage:
+  - 16.6
+  - 33.3
+  - 50
+  - 64
+  - 80
+  - 95
+  NoBlockBlock: {fileID: 404573513475981303, guid: 02002f49ec68c8543811083d8cc8f21c, type: 3}
+  BlockDistance: 32
