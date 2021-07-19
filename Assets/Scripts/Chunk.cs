@@ -17,7 +17,7 @@ public class Chunk : MonoBehaviour
         {
             if (y < gih.OreDepth[i]) continue;
             totalcount += (int)(100f * gih.OreSpawnPercentage[i]);
-            if (totalcount > r)
+            if (totalcount > r || y >= 64)
             {
                 GameObject derivedDrawable = GameObject.Instantiate(gih.OreDrawable[i], new Vector2(x * gih.BlockDistance, -y * gih.BlockDistance), Quaternion.identity);
                 derivedDrawable.transform.parent = transform;
@@ -29,8 +29,9 @@ public class Chunk : MonoBehaviour
 
 
     }
-    void GenerateChunk(int chunkindex)
+    IEnumerator GenerateChunk(int chunkindex)
     {
+        yield return new WaitForSeconds(1);
         transform.position = new Vector3(chunkindex * 16, 0, 0);
 
         for (int x = 0; x < 16; x++)
@@ -44,7 +45,8 @@ public class Chunk : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateChunk(0);
+        StartCoroutine(GenerateChunk(0));
+        StopCoroutine(GenerateChunk(0));
     }
 
     // Update is called once per frame

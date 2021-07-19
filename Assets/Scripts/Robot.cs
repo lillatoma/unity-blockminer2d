@@ -115,34 +115,23 @@ public class Robot : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
 
-        if (moveDirection == (int)E_ROBOT_MOVEMENT_DIR.MOVE_LEFT)
-        {
-            if (v != 0 || h != 0) transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, 0);
-            transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + new Vector3(drillLeftOffset.x, drillLeftOffset.y, 0);
-        }
-        else if (moveDirection == (int)E_ROBOT_MOVEMENT_DIR.MOVE_RIGHT)
-        {
-            if (v != 0 || h != 0) transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, 0);
-            transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + new Vector3(drillRightOffset.x, drillRightOffset.y, 0);
 
-        }
-        else if (moveDirection == (int)E_ROBOT_MOVEMENT_DIR.MOVE_UP)
-        {
-            if (v != 0 || h != 0) transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).GetComponent<Rigidbody2D>().velocity = new Vector2(0, moveSpeed);
-            transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + new Vector3(drillUpOffset.x, drillUpOffset.y, 0);
+        Vector2[] Dirs = { new Vector2(-moveSpeed,0),new Vector2(moveSpeed,0), new Vector2(0,moveSpeed), new Vector2(0,-moveSpeed)};
+        Vector3[] Offsets = { new Vector3(drillLeftOffset.x, drillLeftOffset.y, 0), new Vector3(drillRightOffset.x, drillRightOffset.y, 0), new Vector3(drillUpOffset.x, drillUpOffset.y, 0), new Vector3(drillDownOffset.x, drillDownOffset.y, 0) };
 
-        }
-        else
-        {
-            if (v != 0 || h != 0) transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).GetComponent<Rigidbody2D>().velocity = new Vector2(0, -moveSpeed);
-            transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + new Vector3(drillDownOffset.x, drillDownOffset.y, 0);
 
-        }
+        for(int i = 0; i < 4; i++)
+            if (moveDirection == i)
+            {
+                if (v != 0 || h != 0) transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).GetComponent<Rigidbody2D>().velocity = Dirs[i];
+                transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + Offsets[i];
+
+            }
     }
 
     private void FixedUpdate()
     {
-        MoveRobot();
+        //MoveRobot();
     }
 
     // Start is called before the first frame update
@@ -169,5 +158,6 @@ public class Robot : MonoBehaviour
     void Update()
     {
         RotateRobot();
+        MoveRobot();
     }
 }
