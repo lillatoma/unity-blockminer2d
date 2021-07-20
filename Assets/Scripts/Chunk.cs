@@ -8,7 +8,7 @@ public class Chunk : MonoBehaviour
 
     public void SetupBlock(int x, int y)
     {
-        GameInfoHolder gih = GameObject.FindObjectOfType<GameInfoHolder>();
+        GameInfoHolder gih = GameInfoHolder.Get();
 
         int r = Random.Range(0, 10000);
 
@@ -22,7 +22,7 @@ public class Chunk : MonoBehaviour
                 GameObject derivedDrawable = GameObject.Instantiate(gih.OreDrawable[i], new Vector2(x * gih.BlockDistance, -y * gih.BlockDistance), Quaternion.identity);
                 derivedDrawable.transform.parent = transform;
                 derivedDrawable.GetComponent<Block>().type = i;
-                derivedDrawable.GetComponent<Block>().unbreakable = Equals(gih.OreName[i], "Bedrock");
+
                 break;
             }
         }

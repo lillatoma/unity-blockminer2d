@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Drill : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,13 @@ public class Drill : MonoBehaviour
 
         if(block)
         {
-            block.AddBreakage(2f);
+            GameInfoHolder gih = GameInfoHolder.Get();
+            int drillLevel = transform.parent.GetComponent<Robot>().drillLevel;
+            int drillPower = gih.DrillPower[drillLevel];
+            float drillTimeDirt = gih.DrillTimeOnDirt[drillLevel];
+            float drillTimeOre = gih.DrillTimeOnOre[drillLevel];
+
+            block.AddBreakage(drillPower, drillTimeDirt, drillTimeOre);
         }
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    public bool unbreakable;
     public int type;
     public bool breaking = false;
 
@@ -12,15 +11,25 @@ public class Block : MonoBehaviour
     private float delta;
     private float breakPercentage = 0f;
 
-    public void AddBreakage(float scale)
+    public void AddBreakage(int drillpower, float dirttime, float oretime)
     {
-        if (unbreakable) return;
-        {
-            breakPercentage += scale * delta;
 
-            GameInfoHolder gih = GameObject.FindObjectOfType<GameInfoHolder>();
 
-            if (breakPercentage >= 1f)
+        GameInfoHolder gih = GameInfoHolder.Get();
+
+        if (drillpower < gih.OreStrength[blockindex])
+            return;
+
+        float breaktime = oretime;
+
+        if (Equals(gih.OreName[blockindex], "Dirt"))
+            breaktime = dirttime;
+
+        float scale = 1f / breaktime;
+
+        breakPercentage += scale * delta;
+
+        if (breakPercentage >= 1f)
                 OnBreak(gih);
             else for (int i = gih.BlockBreakage.Length - 1; i >= 0; i--)
                 {
@@ -34,10 +43,9 @@ public class Block : MonoBehaviour
                         break;
                     }
                 }
-        }
     }
 
-    public void OnBreak(GameInfoHolder gih) //spawns the item on break
+    public void OnBreak(GameInfoHolder gih) //spawns the item on break. Parameter is for performance saving, I guess
     {
         GameObject gi = Instantiate(gih.NoBlockBlock, this.transform.position, Quaternion.identity);
         gi.transform.parent = transform.parent;

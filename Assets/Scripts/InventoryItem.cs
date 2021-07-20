@@ -28,7 +28,7 @@ public class InventoryItem : MonoBehaviour
         {
             Inventory inv = GameObject.FindObjectOfType<Inventory>();
 
-            if (inv)
+            if (inv && !inv.IsFull())
             {
                 inv.AddInventoryItem(this);
                 Destroy(this.gameObject);

@@ -127,6 +127,13 @@ public class Robot : MonoBehaviour
                 transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + Offsets[i];
 
             }
+
+        if(moveDirection == (int)E_ROBOT_MOVEMENT_DIR.MOVE_UP && transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position.y > 32f)
+        {
+            transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position = new Vector3(transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position.x, 32f, -1f);
+            transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + Offsets[2];
+            transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).GetComponent<Rigidbody2D>().velocity = new Vector2(transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).GetComponent<Rigidbody2D>().velocity.x, 0);
+        }
     }
 
     private void FixedUpdate()
@@ -139,8 +146,8 @@ public class Robot : MonoBehaviour
     {
         if (transform.childCount <= 0)
         {
-            GameObject R = Instantiate(robotRight, new Vector3(0, 3, -1), Quaternion.identity);
-            GameObject D = Instantiate(drillRight, new Vector3(0, 3, -1) + new Vector3(drillRightOffset.x,drillRightOffset.y,0f), Quaternion.identity);
+            GameObject R = Instantiate(robotRight, new Vector3(0, 32, -1), Quaternion.identity);
+            GameObject D = Instantiate(drillRight, new Vector3(0, 32, -1) + new Vector3(drillRightOffset.x,drillRightOffset.y,0f), Quaternion.identity);
             R.transform.parent = gameObject.transform;
             D.transform.parent = gameObject.transform;
             moveDirection = (int)E_ROBOT_MOVEMENT_DIR.MOVE_RIGHT;

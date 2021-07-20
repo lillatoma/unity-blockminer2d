@@ -9,6 +9,7 @@ public class GameInfoHolder : MonoBehaviour
     public string[] OreName;
     public float[] OreSpawnPercentage;
     public int[] OreDepth;
+    public int[] OreStrength;
     public GameObject[] OreDrawable;
     public GameObject[] OreInvDrawable;
     public int[] OrePrice;
@@ -17,6 +18,19 @@ public class GameInfoHolder : MonoBehaviour
     public GameObject[] BlockBreakage;
     public float[] BlockBreakagePercentage;
     public GameObject NoBlockBlock;
+
+    [Header("Drill Information")]
+    public string[] DrillName;
+    public int[] DrillPrice;
+    public int[] DrillPower;
+    public float[] DrillTimeOnDirt;
+    public float[] DrillTimeOnOre;
+
+    [Header("Backpack Information")]
+    public string[] BackpackName;
+    public int[] BackpackCapacity;
+    public int[] BackpackPrice;
+
 
     [Header("Other")]
     public float BlockDistance;
@@ -41,6 +55,11 @@ public class GameInfoHolder : MonoBehaviour
         }
 
         //PS: I'm too lazy to do assign 22~ numbers, so I do it with code :/
+    }
+
+    public static GameInfoHolder Get()
+    {
+        return GameObject.FindObjectOfType<GameInfoHolder>();
     }
 
     // Update is called once per frame
