@@ -19,6 +19,8 @@ public enum E_ROBOT_CHILD
 
 public class Robot : MonoBehaviour
 {
+    public int Health = 100;
+
     [Header("Robot - Robot")]
     public GameObject robotLeft;
     public GameObject robotRight;
@@ -45,6 +47,38 @@ public class Robot : MonoBehaviour
 
     private int moveDirection = (int)E_ROBOT_MOVEMENT_DIR.MOVE_LEFT;
 
+
+    public void Upgrade(int what)
+    {
+        Inventory inv = GetComponent<Inventory>();
+        GameInfoHolder gih = GameInfoHolder.Get();
+        if (what == 0) //Drill
+        {
+            if(drillLevel + 1 < gih.DrillPrice.Length && inv.Money >= gih.DrillPrice[drillLevel + 1])
+            {
+                inv.Money -= gih.DrillPrice[drillLevel + 1];
+                drillLevel++;
+            }
+        }
+        else if (what == 1) //Backpack
+        {
+            if (backpackLevel + 1 < gih.BackpackPrice.Length && inv.Money >= gih.BackpackPrice[backpackLevel + 1])
+            {
+                inv.Money -= gih.BackpackPrice[backpackLevel + 1];
+                backpackLevel++;
+                UIManager.Get().UpdateAll();
+            }
+        }
+        else //ThermoCore
+        {
+            if (coreLevel + 1 < gih.CorePrice.Length && inv.Money >= gih.CorePrice[coreLevel + 1])
+            {
+                inv.Money -= gih.CorePrice[coreLevel + 1];
+                coreLevel++;
+                UIManager.Get().UpdateAll();
+            }
+        }
+    }
 
     private void DestroyChildren()
     {
@@ -142,19 +176,55 @@ public class Robot : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+
+    private void Init()
     {
         if (transform.childCount <= 0)
         {
             GameObject R = Instantiate(robotRight, new Vector3(0, 32, -1), Quaternion.identity);
-            GameObject D = Instantiate(drillRight, new Vector3(0, 32, -1) + new Vector3(drillRightOffset.x,drillRightOffset.y,0f), Quaternion.identity);
+            GameObject D = Instantiate(drillRight, new Vector3(0, 32, -1) + new Vector3(drillRightOffset.x, drillRightOffset.y, 0f), Quaternion.identity);
             R.transform.parent = gameObject.transform;
             D.transform.parent = gameObject.transform;
             moveDirection = (int)E_ROBOT_MOVEMENT_DIR.MOVE_RIGHT;
         }
     }
 
+    void Start()
+    {
+        Init();
+        StartCoroutine(DamageCheck());
+    }
 
+    void Respawn()
+    {
+        DestroyChildren();
+        Init();
+        Health = 100;
+        GetComponent<Inventory>().Money = (int)((float)GetComponent<Inventory>().Money * (1f - GameInfoHolder.Get().MoneyTakeOnDeathPercentage));
+        GetComponent<Inventory>().items.Clear();
+    }
+    IEnumerator DamageCheck()
+    {
+        GameInfoHolder gih = GameInfoHolder.Get();
+        while (true)
+        {
+            int maxDepth = (int)gih.BlockDistance * gih.CoreDepth[coreLevel];
+
+            if (transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position.y < -maxDepth)
+            {
+                float Delta = -(float)maxDepth - transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position.y;
+                int iDelta = Mathf.CeilToInt(Delta / 32f);
+                Health -= iDelta;
+
+                if (Health <= 0) 
+                    Respawn();
+
+                UIManager.Get().UpdateAll();
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
 
 
 

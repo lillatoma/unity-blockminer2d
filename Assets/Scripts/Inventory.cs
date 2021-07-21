@@ -9,17 +9,22 @@ public class Inventory : MonoBehaviour
     public int Money = 0;
     
 
-
-    public bool IsFull()
+    public int CalculateLoad()
     {
-        GameInfoHolder gih = GameInfoHolder.Get();
-        int bpLevel = transform.GetComponent<Robot>().backpackLevel;
 
-        int bpCapacity = gih.BackpackCapacity[bpLevel];
 
         int load = 0;
         foreach (InventoryItem item in items)
             load += item.Quantity;
+
+        return load;
+    }
+    public bool IsFull()
+    {
+        GameInfoHolder gih = GameInfoHolder.Get();
+        int bpLevel = transform.GetComponent<Robot>().backpackLevel;
+        int bpCapacity = gih.BackpackCapacity[bpLevel];
+        int load = CalculateLoad();
         return (bpCapacity <= load);
 
     }
@@ -40,13 +45,16 @@ public class Inventory : MonoBehaviour
         items.Add(addable);
     }
 
-    public void SellItem(int index, int quantity)
+    public void SellItem(int index, int quantity = 1) //-1 for selling all
     {
         GameInfoHolder gih = GameInfoHolder.Get();
 
         int oneprice = gih.OrePrice[items[index].index];
 
-        quantity = Mathf.Min(quantity, items[index].Quantity); //meaning we can't sell more than we have
+        if (quantity == -1)
+            quantity = items[index].Quantity;
+        else quantity = Mathf.Min(quantity, items[index].Quantity); //meaning we can't sell more than we have
+
 
         Money += quantity * oneprice;
 
@@ -54,6 +62,8 @@ public class Inventory : MonoBehaviour
 
         if (items[index].Quantity <= 0)
             items.RemoveAt(index);
+
+        UIManager.Get().UpdateAll();
     }
 
     // Start is called before the first frame update

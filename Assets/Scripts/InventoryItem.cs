@@ -31,6 +31,7 @@ public class InventoryItem : MonoBehaviour
             if (inv && !inv.IsFull())
             {
                 inv.AddInventoryItem(this);
+                UIManager.Get().UpdateAll();
                 Destroy(this.gameObject);
             }
         }

@@ -15,4 +15,22 @@ public class Shop : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "RobotObject")
+            GameObject.FindObjectOfType<ShopManager>().CloseShopMenu();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "RobotObject" && Input.GetKey(KeyCode.Space))
+            GameObject.FindObjectOfType<ShopManager>().OpenShopMenu();
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "RobotObject" && Input.GetKey(KeyCode.Space)) 
+            GameObject.FindObjectOfType<ShopManager>().OpenShopMenu();
+    }
 }

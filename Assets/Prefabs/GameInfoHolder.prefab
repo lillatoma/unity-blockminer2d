@@ -138,4 +138,23 @@ MonoBehaviour:
   - 0.72
   - 0.64
   - 0.48
+  BackpackName:
+  - Ragbag
+  - Schoolbag
+  - Wooden box
+  - Iron box
+  - Double iron box
+  - Mythical Container
+  BackpackCapacity: 1900000023000000320000004b0000007d000000c8000000
+  BackpackPrice: 0000000096000000c2010000e8030000ca080000a00f0000
+  CoreName:
+  - None
+  - Electrical Tape
+  - Pentium
+  - Duo Core
+  - Quad Core
+  - Xenon Core
+  CoreDepth: 0f00000019000000230000002d0000003700000041000000
+  CorePrice: 00000000c8000000f4010000e8030000d007000088130000
   BlockDistance: 32
+  MoneyTakeOnDeathPercentage: 0

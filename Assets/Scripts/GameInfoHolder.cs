@@ -31,9 +31,14 @@ public class GameInfoHolder : MonoBehaviour
     public int[] BackpackCapacity;
     public int[] BackpackPrice;
 
+    [Header("ThermoCore Information")]
+    public string[] CoreName;
+    public int[] CoreDepth;
+    public int[] CorePrice;
 
     [Header("Other")]
     public float BlockDistance;
+    public float MoneyTakeOnDeathPercentage;
 
 
     // Start is called before the first frame update
