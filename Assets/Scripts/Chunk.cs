@@ -30,24 +30,28 @@ public class Chunk : MonoBehaviour
 
 
     }
-    IEnumerator GenerateChunk(int chunkindex)
+    IEnumerator GenerateChunk(int chunkindex, int totalChunks)
     {
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.1f);
         transform.position = new Vector3(chunkindex * 16*32, 0, 0);
 
         for (int x = 0; x < 16; x++)
+        {
             for (int y = 0; y < 80; y++)
             {
                 SetupBlock(x, y);
-            } 
+            }
+            yield return new WaitForSeconds(.025f * totalChunks);
+        }
+        
+        yield return null;
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(GenerateChunk(chunkindex));
-        StopCoroutine(GenerateChunk(chunkindex));
+        StartCoroutine(GenerateChunk(chunkindex,ChunkManager.Get().GetTotalChunks()));
     }
 
     // Update is called once per frame
@@ -55,4 +59,23 @@ public class Chunk : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "MainCamera")
+        {
+            foreach (Transform child in transform)
+                child.transform.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "MainCamera")
+        {
+            foreach (Transform child in transform)
+                child.transform.gameObject.SetActive(false);
+        }
+    }
+
 }
