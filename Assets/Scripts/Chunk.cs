@@ -6,10 +6,8 @@ public class Chunk : MonoBehaviour
 {
     public int chunkindex;
 
-    public void SetupBlock(int x, int y)
+    public void SetupBlock(int x, int y, GameInfoHolder gih)
     {
-        GameInfoHolder gih = GameInfoHolder.Get();
-
         int r = Random.Range(0, 10000);
 
         int totalcount = 0;
@@ -30,28 +28,28 @@ public class Chunk : MonoBehaviour
 
 
     }
-    IEnumerator GenerateChunk(int chunkindex, int totalChunks)
+    IEnumerator GenerateChunk(int totalChunks)
     {
         yield return new WaitForSeconds(.1f);
         transform.position = new Vector3(chunkindex * 16*32, 0, 0);
+
+        GameInfoHolder gih = GameInfoHolder.Get();
 
         for (int x = 0; x < 16; x++)
         {
             for (int y = 0; y < 80; y++)
             {
-                SetupBlock(x, y);
+                SetupBlock(x, y, gih);
             }
-            yield return new WaitForSeconds(.025f * totalChunks);
         }
         
-        yield return null;
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(GenerateChunk(chunkindex,ChunkManager.Get().GetTotalChunks()));
+        StartCoroutine(GenerateChunk(ChunkManager.Get().GetTotalChunks()));
     }
 
     // Update is called once per frame

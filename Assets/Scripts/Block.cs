@@ -8,14 +8,15 @@ public class Block : MonoBehaviour
     public bool breaking = false;
 
     public int blockindex;
-    private float delta;
     private float breakPercentage = 0f;
 
-    public void AddBreakage(int drillpower, float dirttime, float oretime)
+    GameInfoHolder gih;
+
+    public void AddBreakage(int drillpower, float dirttime, float oretime, float delta)
     {
+        if(gih == null)
+            gih = GameInfoHolder.Get();
 
-
-        GameInfoHolder gih = GameInfoHolder.Get();
 
         if (drillpower < gih.OreStrength[blockindex])
             return;
@@ -65,6 +66,11 @@ public class Block : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        delta = Time.deltaTime;
+
+    }
+
+    private void Start()
+    {
+        //gih = GameInfoHolder.Get();
     }
 }

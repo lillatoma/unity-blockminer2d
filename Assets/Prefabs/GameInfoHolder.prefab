@@ -56,10 +56,10 @@ MonoBehaviour:
   - Bedrock
   - Dirt
   OreSpawnPercentage:
-  - 1
-  - 8
-  - 5
-  - 3
+  - 2
+  - 11
+  - 6.5
+  - 4
   - 3
   - 2
   - 1.5

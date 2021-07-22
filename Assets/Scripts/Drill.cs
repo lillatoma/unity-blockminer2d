@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Drill : MonoBehaviour
 {
-
+    GameInfoHolder gih;
+    float delta;
     // Start is called before the first frame update
     void Start()
     {
-
+        gih = GameInfoHolder.Get();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        delta = Time.deltaTime;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -23,13 +24,13 @@ public class Drill : MonoBehaviour
 
         if(block)
         {
-            GameInfoHolder gih = GameInfoHolder.Get();
             int drillLevel = transform.parent.GetComponent<Robot>().drillLevel;
             int drillPower = gih.DrillPower[drillLevel];
             float drillTimeDirt = gih.DrillTimeOnDirt[drillLevel];
             float drillTimeOre = gih.DrillTimeOnOre[drillLevel];
 
-            block.AddBreakage(drillPower, drillTimeDirt, drillTimeOre);
+            block.AddBreakage(drillPower, drillTimeDirt, drillTimeOre, delta);
+            delta = 0f;
         }
     }
 

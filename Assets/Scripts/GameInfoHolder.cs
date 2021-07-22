@@ -14,6 +14,7 @@ public class GameInfoHolder : MonoBehaviour
     public GameObject[] OreInvDrawable;
     public int[] OrePrice;
 
+
     [Header("Block Breakage")]
     public GameObject[] BlockBreakage;
     public float[] BlockBreakagePercentage;

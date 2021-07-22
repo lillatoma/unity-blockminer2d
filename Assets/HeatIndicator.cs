@@ -6,21 +6,21 @@ using UnityEngine.UI;
 public class HeatIndicator : MonoBehaviour
 {
     public Image panel;
-
+    GameInfoHolder gih;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+       gih = GameInfoHolder.Get();
     }
 
     // Update is called once per frame
     void Update()
     {
         Robot robot = FindObjectOfType<Robot>();
-        GameInfoHolder gih = GameInfoHolder.Get();
+
 
         int maxSafeDepth = gih.CoreDepth[robot.coreLevel];
 

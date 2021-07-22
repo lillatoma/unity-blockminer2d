@@ -58,6 +58,7 @@ public class Robot : MonoBehaviour
             {
                 inv.Money -= gih.DrillPrice[drillLevel + 1];
                 drillLevel++;
+                UIManager.Get().UpdateAll();
             }
         }
         else if (what == 1) //Backpack
