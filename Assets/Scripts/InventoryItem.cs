@@ -7,23 +7,10 @@ public class InventoryItem : MonoBehaviour
     public int index;
     public int Quantity = 1;
 
-
-
-
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
+        //If an InventoryItem collides with the Robot, that means the robot picks the item up, if there is still place left
+        //To avoid infinite item pickups, we destroy this item
         if (collision.tag == "RobotObject")
         {
             Inventory inv = GameObject.FindObjectOfType<Inventory>();

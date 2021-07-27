@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Robot rob;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        rob = GameObject.FindObjectOfType<Robot>();
+    }
     void Update()
     {
-        Robot rob = GameObject.FindObjectOfType<Robot>();
+        //We center the camera to the robot's position, so it follows the robot
         transform.position = rob.transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + new Vector3(0,0,-9f);
     }
 }

@@ -15,6 +15,7 @@ public class Drill : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Since OnTrigger...(...) functions are called randomly, we want to ensure that we always have the correct frametime
         delta = Time.deltaTime;
     }
 
@@ -22,37 +23,21 @@ public class Drill : MonoBehaviour
     {
         Block block = collision.GetComponent<Block>();
 
+        //We only want to do anything if the drill collides with a block
         if(block)
         {
+            //We get the drill data according to the drillLevel
             int drillLevel = transform.parent.GetComponent<Robot>().drillLevel;
             int drillPower = gih.DrillPower[drillLevel];
             float drillTimeDirt = gih.DrillTimeOnDirt[drillLevel];
             float drillTimeOre = gih.DrillTimeOnOre[drillLevel];
 
+            //Then we add breakage to the block
             block.AddBreakage(drillPower, drillTimeDirt, drillTimeOre, delta);
+
+            //Since OnTriggerStay2D(...) is called randomly, we want to ensure that we only apply breakage once per frame
             delta = 0f;
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    Block block = collision.GetComponent<Block>();
-
-    //    if(block)
-    //    {
-    //        Debug.Log("Block started breaking");
-    //        block.breaking = true;
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    Block block = collision.GetComponent<Block>();
-
-    //    if (block)
-    //    {
-    //        block.breaking = false;
-    //        Debug.Log("Block stopped breaking");
-    //    }
-    //}
 }

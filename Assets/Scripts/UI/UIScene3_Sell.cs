@@ -8,14 +8,18 @@ public class UIScene3_Sell : MonoBehaviour
 
     public void Clear()
     {
+        //Destroys all SellOanels
         foreach(Transform child in transform)
             Destroy(child.gameObject);
     }
 
     public void Begin()
     {
+        //Destroy any previous SellPanels
         Clear();
         Inventory inv = FindObjectOfType<Inventory>();
+
+        //For each item we create a new SellPanel
         for(int i = 0; i < inv.items.Count; i++)
         {
             GameObject sellpanel = Instantiate(SellPanelPrefab, new Vector3(), Quaternion.identity);
@@ -30,17 +34,11 @@ public class UIScene3_Sell : MonoBehaviour
     public void RedrawCheck()
     {
         Inventory inv = FindObjectOfType<Inventory>();
+        //If we sold all our items, or (somehow) picked up a new item in the shop area, we Begin()
         if(inv.items.Count != transform.childCount)
         {
             Begin();
         }
-    }
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame

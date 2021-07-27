@@ -8,6 +8,9 @@ public class ChunkCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //This is used for chunk generation
+        //If the camera's collider hits one with (IsLeft == true), we generate a new chunk towards the left
+        //Else, towards the right
         if(collision.tag == "MainCamera")
         {
             if (IsLeft)

@@ -12,31 +12,14 @@ public class ShopMenu : MonoBehaviour
 
     public void OpenScene(int sceneidx)
     {
+        //Sets active the currently visible scene, and sets inactive the rest
         DecideScreen.SetActive(sceneidx == 0);
         BuyScreen.SetActive(sceneidx == 1);
         SellScreen.SetActive(sceneidx == 2);
 
+        //If we sell items, we have to prepare the SellPanels
         if (sceneidx == 2)
             SellScreen.GetComponent<UIScene3_Sell>().Begin();
     }
 
-
-    /////////////////////////////////////////
-    ///             SCENE 1              ///
-    ///////////////////////////////////////
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

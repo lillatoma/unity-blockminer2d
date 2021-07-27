@@ -65,6 +65,7 @@ public class GameInfoHolder : MonoBehaviour
 
     public static GameInfoHolder Get()
     {
+        //Returning the supposed only GameInfoHolder
         return GameObject.FindObjectOfType<GameInfoHolder>();
     }
 

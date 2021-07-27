@@ -52,8 +52,10 @@ public class Robot : MonoBehaviour
     {
         Inventory inv = GetComponent<Inventory>();
         GameInfoHolder gih = GameInfoHolder.Get();
+
         if (what == 0) //Drill
         {
+            //If there is still an upgrade left, and we can afford it, we buy the upgrade, and update the UI
             if(drillLevel + 1 < gih.DrillPrice.Length && inv.Money >= gih.DrillPrice[drillLevel + 1])
             {
                 inv.Money -= gih.DrillPrice[drillLevel + 1];
@@ -63,6 +65,7 @@ public class Robot : MonoBehaviour
         }
         else if (what == 1) //Backpack
         {
+            //If there is still an upgrade left, and we can afford it, we buy the upgrade, and update the UI
             if (backpackLevel + 1 < gih.BackpackPrice.Length && inv.Money >= gih.BackpackPrice[backpackLevel + 1])
             {
                 inv.Money -= gih.BackpackPrice[backpackLevel + 1];
@@ -72,6 +75,7 @@ public class Robot : MonoBehaviour
         }
         else //ThermoCore
         {
+            //If there is still an upgrade left, and we can afford it, we buy the upgrade, and update the UI
             if (coreLevel + 1 < gih.CorePrice.Length && inv.Money >= gih.CorePrice[coreLevel + 1])
             {
                 inv.Money -= gih.CorePrice[coreLevel + 1];
@@ -81,6 +85,7 @@ public class Robot : MonoBehaviour
         }
     }
 
+    //Disturbing naming, but it does what it does
     private void DestroyChildren()
     {
         for(int i = transform.childCount - 1; i>= 0; i--)
@@ -92,11 +97,12 @@ public class Robot : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal"); 
 
+        //We save the originalposition of the robot
         Vector3 originalPos = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position;
 
         if (h > 0)
         {
-            if (moveDirection != (int)E_ROBOT_MOVEMENT_DIR.MOVE_RIGHT)
+            if (moveDirection != (int)E_ROBOT_MOVEMENT_DIR.MOVE_RIGHT) //If we move right, but we aren't facing right, we reconstruct our robot and our drill facing right
             {
                 DestroyChildren();
                 GameObject R = Instantiate(robotRight, originalPos, Quaternion.identity);
@@ -108,7 +114,7 @@ public class Robot : MonoBehaviour
         }
         else if (h < 0)
         {
-            if (moveDirection != (int)E_ROBOT_MOVEMENT_DIR.MOVE_LEFT)
+            if (moveDirection != (int)E_ROBOT_MOVEMENT_DIR.MOVE_LEFT) //If we move left, but we aren't facing left, we reconstruct our robot and our drill facing left
             {
                 DestroyChildren();
                 GameObject R = Instantiate(robotLeft, originalPos, Quaternion.identity);
@@ -120,7 +126,7 @@ public class Robot : MonoBehaviour
         }
         else if (v < 0)
         {
-            if (moveDirection != (int)E_ROBOT_MOVEMENT_DIR.MOVE_DOWN)
+            if (moveDirection != (int)E_ROBOT_MOVEMENT_DIR.MOVE_DOWN) //If we move down, but we aren't facing down, we reconstruct our robot and our drill facing down
             {
                 DestroyChildren();
                 GameObject R = Instantiate(robotDown, originalPos, Quaternion.identity);
@@ -132,7 +138,7 @@ public class Robot : MonoBehaviour
         }
         else if (v > 0)
         {
-            if (moveDirection != (int)E_ROBOT_MOVEMENT_DIR.MOVE_UP)
+            if (moveDirection != (int)E_ROBOT_MOVEMENT_DIR.MOVE_UP) //If we move up, but we aren't facing up, we reconstruct our robot and our drill facing up
             {
                 DestroyChildren();
                 GameObject R = Instantiate(robotUp, originalPos, Quaternion.identity);
@@ -150,7 +156,7 @@ public class Robot : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
 
-
+        //Left, right, down, up
         Vector2[] Dirs = { new Vector2(-moveSpeed,0),new Vector2(moveSpeed,0), new Vector2(0,moveSpeed), new Vector2(0,-moveSpeed)};
         Vector3[] Offsets = { new Vector3(drillLeftOffset.x, drillLeftOffset.y, 0), new Vector3(drillRightOffset.x, drillRightOffset.y, 0), new Vector3(drillUpOffset.x, drillUpOffset.y, 0), new Vector3(drillDownOffset.x, drillDownOffset.y, 0) };
 
@@ -158,11 +164,13 @@ public class Robot : MonoBehaviour
         for(int i = 0; i < 4; i++)
             if (moveDirection == i)
             {
+                //If there is input, we update the velocity of our robot
                 if (v != 0 || h != 0) transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).GetComponent<Rigidbody2D>().velocity = Dirs[i];
                 transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position = transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position + Offsets[i];
 
             }
 
+        //If the robot is on the surface, we don't want it to fly, we stop it
         if(moveDirection == (int)E_ROBOT_MOVEMENT_DIR.MOVE_UP && transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position.y > 32f)
         {
             transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position = new Vector3(transform.GetChild((int)E_ROBOT_CHILD.CH_DRILL).transform.position.x, 32f, -1f);
@@ -171,15 +179,13 @@ public class Robot : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        //MoveRobot();
-    }
+
 
     // Start is called before the first frame update
 
     private void Init()
     {
+        //This function places the robot to the spawnpoint, facing right
         if (transform.childCount <= 0)
         {
             GameObject R = Instantiate(robotRight, new Vector3(0, 32, -1), Quaternion.identity);
@@ -192,15 +198,20 @@ public class Robot : MonoBehaviour
 
     void Start()
     {
+        //We spawn the robot
         Init();
+        //We also initatite a Coroutine to check if the robot is too deep according to its coreLevel
         StartCoroutine(DamageCheck());
     }
 
     void Respawn()
     {
+        //We destroy the robot object and spawn it to the spawnpoint with max health
         DestroyChildren();
         Init();
         Health = 100;
+
+        //We also take a fee for reconstructing the dead robot, and clear its inventory since it's gone.
         GetComponent<Inventory>().Money = (int)((float)GetComponent<Inventory>().Money * (1f - GameInfoHolder.Get().MoneyTakeOnDeathPercentage));
         GetComponent<Inventory>().items.Clear();
     }
@@ -209,20 +220,26 @@ public class Robot : MonoBehaviour
         GameInfoHolder gih = GameInfoHolder.Get();
         while (true)
         {
+            //The maximum depth the robot can handle
             int maxDepth = (int)gih.BlockDistance * gih.CoreDepth[coreLevel];
 
+            //If the robot is too deep
             if (transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position.y < -maxDepth)
             {
+                //For each block lower than the maxDepth the damage increases by 1.
                 float Delta = -(float)maxDepth - transform.GetChild((int)E_ROBOT_CHILD.CH_BODY).transform.position.y;
                 int iDelta = Mathf.CeilToInt(Delta / 32f);
                 Health -= iDelta;
 
+                //If the robot dies, we respawn
                 if (Health <= 0) 
                     Respawn();
 
+                //We update the UI to show the damage
                 UIManager.Get().UpdateAll();
             }
 
+            //Every second, we do this check
             yield return new WaitForSeconds(1f);
         }
     }

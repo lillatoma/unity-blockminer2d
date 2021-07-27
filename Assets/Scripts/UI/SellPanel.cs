@@ -9,12 +9,6 @@ public class SellPanel : MonoBehaviour
     public Image image;
     public Text text;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -27,7 +21,7 @@ public class SellPanel : MonoBehaviour
         GameInfoHolder gih = GameInfoHolder.Get();
         Inventory inv = GameObject.FindObjectOfType<Inventory>();
 
-
+        //We change the sprite and text of the panel
         image.sprite = gih.OreInvDrawable[inv.items[InventoryIndex].index].GetComponent<SpriteRenderer>().sprite;
         text.text = gih.OreName[inv.items[InventoryIndex].index] + " (" + inv.items[InventoryIndex].Quantity + " | $" + gih.OrePrice[inv.items[InventoryIndex].index] + ")";
 
@@ -37,11 +31,13 @@ public class SellPanel : MonoBehaviour
 
     public void SellOne()
     {
+        //Sells one item
         GameObject.FindObjectOfType<Inventory>().SellItem(InventoryIndex);
     }
 
     public void SellAll()
     {
+        //Sells all items, -1 meaning all items
         GameObject.FindObjectOfType<Inventory>().SellItem(InventoryIndex, -1);
     }
 }

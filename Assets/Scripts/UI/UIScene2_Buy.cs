@@ -15,7 +15,8 @@ public class UIScene2_Buy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //We update immediately so everything loads up correctly in the first frame
+        Update();
     }
 
     // Update is called once per frame
@@ -26,6 +27,9 @@ public class UIScene2_Buy : MonoBehaviour
 
         Color32 GoodColor = new Color32(64, 192, 64, 255);
         Color32 BadColor = new Color32(128, 44, 64, 255);
+
+
+        //Then for each upgradable item we change the button text and the button color, and the text next to the button
 
         //Drill
         DrillText.text = "Drill Level " + rob.drillLevel + " - " + gih.DrillName[rob.drillLevel];

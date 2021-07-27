@@ -14,6 +14,7 @@ public class ChunkManager : MonoBehaviour
     private int LeftChunk = 0;
     private int RightChunk = 0;
 
+    //Unused function that was used to slow down chunk generation when it was slow to generate a chunk
     public int GetTotalChunks()
     {
         return RightChunk - LeftChunk + 1;
@@ -21,9 +22,11 @@ public class ChunkManager : MonoBehaviour
 
     static public ChunkManager Get()
     {
+        //Function to find the supposed only ChunkManager object
         return FindObjectOfType<ChunkManager>();
     }
 
+    //This function generates a chunk to the position of the left collider, and pushes the left collider further
     public void AddLeftChunk()
     {
         LeftChunk --;
@@ -33,7 +36,7 @@ public class ChunkManager : MonoBehaviour
         LeftCollider.transform.position = new Vector3(LeftCollider.transform.position.x - 16 * GameInfoHolder.Get().BlockDistance, LeftCollider.transform.position.y, LeftCollider.transform.position.z);
         
     }
-
+    //This function generates a chunk to the position of the right collider, and pushes the right collider further
     public void AddRightChunk()
     {
         RightChunk ++;
@@ -44,36 +47,15 @@ public class ChunkManager : MonoBehaviour
 
     }
 
-    void PrepareChunk()
-    {
-
-        for (int i = 0; i < 16 * 80; i++)
-        {
-            GameObject undecided = Instantiate(GameInfoHolder.Get().OreDrawable[0],new Vector3(i*64f,512f,0f),Quaternion.identity);
-            undecided.name = "Undecided";
-            undecided.SetActive(false);
-            undecided.transform.parent = ChunkDefault.transform;
-        }
-    }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //PrepareChunk();
-        
         //Setting up chunk #0
         GameObject chunk = Instantiate(ChunkDefault);
         chunk.gameObject.SetActive(true);
         chunk.GetComponent<Chunk>().chunkindex = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        float aspectRatio = (float)Screen.width / (float)Screen.height;
-        float totalBlocksOnScreenHorizontal = 450f / 32f * aspectRatio;
-
-
-    }
 }

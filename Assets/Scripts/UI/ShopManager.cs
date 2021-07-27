@@ -8,11 +8,13 @@ public class ShopManager : MonoBehaviour
 
     public void OpenShopMenu()
     {
+        //Opens shop menu
         TheShopMenu.SetActive(true);
     }
 
     public void CloseShopMenu()
     {
+        //Closes shop menu, and sets it back to the default shop scene
         TheShopMenu.GetComponent<ShopMenu>().OpenScene(0);
         TheShopMenu.SetActive(false);
         

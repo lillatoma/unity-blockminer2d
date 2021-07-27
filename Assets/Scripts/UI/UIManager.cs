@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     BackpackUI backpackUI;
     HealthUI healthUI;
 
+    //Updates almost all UI elements. HeatIndicator is always updated, so it's not updated here
     public void UpdateAll()
     {
         GameInfoHolder gih = GameInfoHolder.Get();
@@ -29,12 +30,8 @@ public class UIManager : MonoBehaviour
 
     public static UIManager Get()
     {
+        //Returns the supposed only UIManager
         return GameObject.FindObjectOfType<UIManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
