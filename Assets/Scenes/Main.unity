@@ -2129,6 +2129,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameInfoHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 9220676866012775267, guid: b584865e7c24da14cbb71dd740832342, type: 3}
+      propertyPath: MoneyTakeOnDeathPercentage
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b584865e7c24da14cbb71dd740832342, type: 3}
 --- !u!1 &1097210041
